@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conmec Industrial — Credibilidade e Confiança que geram resultados. Montagem industrial, manutenção metalmecânica, caldeiras e mais.">
+  <title>Conmec Industrial</title>
+
+  <!-- Preconnect Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="Conmec Industrial - Página inicial">
+        <svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Conmec Industrial">
+          <rect width="36" height="36" x="2" y="2" rx="4" fill="#E39A38"/>
+          <path d="M10 20 L20 10 L30 20 L20 30 Z" fill="#133B5C"/>
+          <text x="46" y="26" font-family="Montserrat, sans-serif" font-weight="900" font-size="16" fill="currentColor" letter-spacing="1">CONMEC</text>
+          <text x="46" y="37" font-family="Inter, sans-serif" font-weight="400" font-size="9" fill="currentColor" letter-spacing="2">INDUSTRIAL</text>
+        </svg>
+      </a>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <ul role="list">
+          <li><a href="#empresa">Empresa</a></li>
+          <li class="has-dropdown">
+            <a href="#servicos">Serviços</a>
+          </li>
+          <li><a href="#infraestrutura">Infraestrutura</a></li>
+          <li><a href="#atuacao">Onde Atuamos</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#contato" class="btn btn-primary">→ Fale com o Comercial</a>
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav aria-label="Menu mobile">
+      <ul role="list">
+        <li><a href="#empresa">Empresa</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#infraestrutura">Infraestrutura</a></li>
+        <li><a href="#atuacao">Onde Atuamos</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+      <a href="#contato" class="btn btn-primary btn-full">→ Fale com o Comercial</a>
+    </nav>
+  </div>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="hero" id="hero" aria-label="Apresentação principal">
+      <div class="hero-overlay"></div>
+      <div class="hero-bg"></div>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1>Credibilidade e Confiança<br>que geram resultados.</h1>
+          <p>Há mais de 30 anos executamos projetos de alta complexidade para as maiores indústrias do Brasil e da América Latina — com sede própria de 22.000 m², equipe de gestão experiente e tecnologia robótica que poucos prestadores do setor possuem.</p>
+          <div class="hero-ctas">
+            <a href="#contato" class="btn btn-primary btn-lg">→ Fale com o Comercial</a>
+            <a href="#servicos" class="btn btn-ghost btn-lg">Conheça nossos serviços</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span></span>
+      </div>
+    </section>
+
+    <!-- NÚMEROS DE CREDIBILIDADE -->
+    <section class="credibilidade" id="numeros" aria-label="Números de credibilidade">
+      <div class="container">
+        <ul class="numeros-grid" role="list">
+          <li class="numero-item">
+            <span class="numero" data-target="30">0</span>
+            <span class="numero-sufixo">+</span>
+            <span class="numero-label">anos de experiência</span>
+          </li>
+          <li class="numero-item">
+            <span class="numero" data-target="22000">0</span>
+            <span class="numero-sufixo">m²</span>
+            <span class="numero-label">de infraestrutura própria</span>
+          </li>
+          <li class="numero-item">
+            <span class="numero" data-target="150">0</span>
+            <span class="numero-sufixo">t/mês</span>
+            <span class="numero-label">capacidade fabril</span>
+          </li>
+          <li class="numero-item">
+            <span class="numero" data-target="130">0</span>
+            <span class="numero-sufixo">+</span>
+            <span class="numero-label">colaboradores</span>
+          </li>
+          <li class="numero-item">
+            <span class="numero-text">ISO</span>
+            <span class="numero-sufixo">9001</span>
+            <span class="numero-label">certificada</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EMPRESA -->
+    <section class="sobre section-pad" id="empresa" aria-label="Sobre a empresa">
+      <div class="container">
+        <div class="sobre-grid">
+          <div class="sobre-texto">
+            <span class="section-eyebrow">Quem Somos</span>
+            <h2>Engenharia industrial de alta complexidade</h2>
+            <p>A Conmec Industrial é uma empresa especializada em montagem industrial, manutenção metalmecânica e fabricação de estruturas de grande porte. Com mais de três décadas de atuação, consolidamos uma reputação de excelência técnica e parceria real com nossos clientes.</p>
+            <p>Nossa infraestrutura própria de 22.000 m² em Aracruz (ES), aliada à tecnologia robótica de corte e solda — pioneira no Espírito Santo —, nos permite assumir projetos de qualquer escala com controle total do processo produtivo.</p>
+            <a href="#contato" class="btn btn-outline">Conheça nossa história</a>
+          </div>
+          <div class="sobre-imagem" aria-hidden="true">
+            <div class="img-placeholder">
+              <i data-lucide="factory" style="width:80px;height:80px;color:#E39A38"></i>
+              <p>Imagem institucional</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section class="servicos section-pad" id="servicos" aria-label="Nossos serviços">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">O que fazemos</span>
+          <h2>Serviços que sustentam<br>operações industriais</h2>
+        </div>
+        <ul class="servicos-grid" role="list">
+          <li class="servico-card">
+            <div class="card-icon"><i data-lucide="wrench"></i></div>
+            <h3>Montagem Industrial</h3>
+            <p>Montagem de equipamentos, estruturas metálicas e sistemas industriais de grande porte com equipes especializadas.</p>
+            <a href="#contato" class="card-link">→ Saiba mais</a>
+          </li>
+          <li class="servico-card">
+            <div class="card-icon"><i data-lucide="settings"></i></div>
+            <h3>Paradas de Planta</h3>
+            <p>Planejamento e execução de paradas programadas com máximo controle de prazo e segurança operacional.</p>
+            <a href="#contato" class="card-link">→ Saiba mais</a>
+          </li>
+          <li class="servico-card">
+            <div class="card-icon"><i data-lucide="hammer"></i></div>
+            <h3>Fabricação e Recuperação de Equipamentos</h3>
+            <p>Fabricação sob medida e recuperação de equipamentos industriais em nossa planta própria de 22.000 m².</p>
+            <a href="#contato" class="card-link">→ Saiba mais</a>
+          </li>
+          <li class="servico-card">
+            <div class="card-icon"><i data-lucide="shield-check"></i></div>
+            <h3>Manutenção Metalmecânica</h3>
+            <p>Manutenção corretiva e preventiva de sistemas metalmecânicos com equipes certificadas e resposta ágil.</p>
+            <a href="#contato" class="card-link">→ Saiba mais</a>
+          </li>
+          <li class="servico-card">
+            <div class="card-icon"><i data-lucide="flame"></i></div>
+            <h3>Caldeiras e Vasos de Pressão</h3>
+            <p>Manutenção especializada em caldeiras e vasos de pressão com inspetores qualificados LP e NR-13.</p>
+            <a href="#contato" class="card-link">→ Saiba mais</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SETORES -->
+    <section class="setores section-pad" id="setores" aria-label="Setores atendidos">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Mercados</span>
+          <h2>Atuamos onde o desafio é maior</h2>
+          <p>Com profundo conhecimento dos processos produtivos de cada setor, a Conmec entrega projetos alinhados às exigências técnicas e aos prazos críticos das operações industriais.</p>
+        </div>
+        <ul class="setores-grid" role="list">
+          <li class="setor-item">
+            <div class="setor-icon"><i data-lucide="trees"></i></div>
+            <span>Papel e Celulose</span>
+          </li>
+          <li class="setor-item">
+            <div class="setor-icon"><i data-lucide="layers"></i></div>
+            <span>Siderurgia</span>
+          </li>
+          <li class="setor-item">
+            <div class="setor-icon"><i data-lucide="flask-conical"></i></div>
+            <span>Química</span>
+          </li>
+          <li class="setor-item">
+            <div class="setor-icon"><i data-lucide="zap"></i></div>
+            <span>Energia</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJETOS / CASES -->
+    <section class="cases section-pad" id="cases" aria-label="Projetos em destaque">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Portfólio</span>
+          <h2>Projetos que comprovam<br>nossa capacidade</h2>
+        </div>
+        <ul class="cases-grid" role="list">
+          <li class="case-card">
+            <div class="case-cliente">CMPC / Valmet</div>
+            <h3>Retrofit de 2 Difusores</h3>
+            <p class="case-local"><i data-lucide="map-pin" style="width:14px;height:14px"></i> Rio Grande do Sul</p>
+            <p class="case-prazo">Abr–Dez 2026</p>
+          </li>
+          <li class="case-card">
+            <div class="case-cliente">Gerdau</div>
+            <h3>Reforma Geral de Caldeiras</h3>
+            <p class="case-local"><i data-lucide="map-pin" style="width:14px;height:14px"></i> Ouro Branco, MG</p>
+            <p class="case-prazo">4,5 meses de execução</p>
+          </li>
+          <li class="case-card">
+            <div class="case-cliente">Suzano</div>
+            <h3>Fabricação e Substituição de Tanque de Ácido Sulfúrico Ø 7.100mm × 10.000mm</h3>
+            <p class="case-local"><i data-lucide="map-pin" style="width:14px;height:14px"></i> Aracruz, ES</p>
+            <p class="case-prazo">4 meses</p>
+          </li>
+          <li class="case-card">
+            <div class="case-cliente">Ternium</div>
+            <h3>Substituição de Chaminé de Alto Forno</h3>
+            <p class="case-local"><i data-lucide="map-pin" style="width:14px;height:14px"></i> Rio de Janeiro, RJ</p>
+            <p class="case-prazo">45 dias</p>
+          </li>
+        </ul>
+        <div class="section-cta">
+          <a href="#contato" class="btn btn-outline">→ Ver todos os projetos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section class="clientes section-pad" id="clientes" aria-label="Clientes">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Clientes</span>
+          <h2>Empresas que confiam na Conmec</h2>
+        </div>
+        <ul class="clientes-grid" role="list" aria-label="Logotipos de clientes">
+          <li>Suzano</li>
+          <li>Gerdau</li>
+          <li>Ternium</li>
+          <li>Suncoke</li>
+          <li>Valmet</li>
+          <li>Eldorado Celulose</li>
+          <li>CMPC</li>
+          <li>Veracel</li>
+        </ul>
+        <p class="clientes-nota">* Logotipos sujeitos a autorização de uso</p>
+      </div>
+    </section>
+
+    <!-- DIFERENCIAIS -->
+    <section class="diferenciais section-pad" id="diferenciais" aria-label="Por que a Conmec">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow" style="color:#E39A38">Diferenciais</span>
+          <h2>Por que a Conmec?</h2>
+        </div>
+        <ul class="diferenciais-grid" role="list">
+          <li class="diferencial-item">
+            <div class="dif-icon"><i data-lucide="users"></i></div>
+            <div class="dif-texto">
+              <h3>Acesso direto à direção</h3>
+              <p>Decisões sem burocracia, parceria real com quem decide.</p>
+            </div>
+          </li>
+          <li class="diferencial-item">
+            <div class="dif-icon"><i data-lucide="building-2"></i></div>
+            <div class="dif-texto">
+              <h3>Infraestrutura própria</h3>
+              <p>Sem dependência de terceiros para fabricar — controle total do processo.</p>
+            </div>
+          </li>
+          <li class="diferencial-item">
+            <div class="dif-icon"><i data-lucide="cpu"></i></div>
+            <div class="dif-texto">
+              <h3>Tecnologia robótica</h3>
+              <p>Pioneiros no Espírito Santo em corte e solda robótica de estruturas industriais.</p>
+            </div>
+          </li>
+          <li class="diferencial-item">
+            <div class="dif-icon"><i data-lucide="award"></i></div>
+            <div class="dif-texto">
+              <h3>Equipe com +20 anos na indústria</h3>
+              <p>Gestão experiente com histórico comprovado em projetos de alta exigência.</p>
+            </div>
+          </li>
+          <li class="diferencial-item">
+            <div class="dif-icon"><i data-lucide="shield"></i></div>
+            <div class="dif-texto">
+              <h3>Segurança, qualidade e prazo</h3>
+              <p>Compromisso com os três pilares que definem parceiros industriais de longo prazo.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-final" id="contato" aria-label="Fale com o comercial">
+      <div class="container">
+        <h2>Tem um projeto em mente?</h2>
+        <p>Fale com nossa equipe comercial e receba uma proposta alinhada à realidade da sua operação.</p>
+        <a href="mailto:comercial@conmec.com.br" class="btn btn-dark btn-lg">→ Solicitar contato comercial</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="#" class="logo logo-footer" aria-label="Conmec Industrial">
+          <svg width="140" height="36" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" x="2" y="2" rx="4" fill="#E39A38"/>
+            <path d="M10 20 L20 10 L30 20 L20 30 Z" fill="#133B5C"/>
+            <text x="46" y="26" font-family="Montserrat, sans-serif" font-weight="900" font-size="16" fill="#fff" letter-spacing="1">CONMEC</text>
+            <text x="46" y="37" font-family="Inter, sans-serif" font-weight="400" font-size="9" fill="#aaa" letter-spacing="2">INDUSTRIAL</text>
+          </svg>
+        </a>
+        <address>
+          Aracruz, Espírito Santo — Brasil<br>
+          <a href="mailto:comercial@conmec.com.br">comercial@conmec.com.br</a>
+        </address>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul role="list">
+          <li><a href="#servicos">Montagem Industrial</a></li>
+          <li><a href="#servicos">Paradas de Planta</a></li>
+          <li><a href="#servicos">Fabricação de Equipamentos</a></li>
+          <li><a href="#servicos">Manutenção Metalmecânica</a></li>
+          <li><a href="#servicos">Caldeiras e Vasos de Pressão</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Links Rápidos</h4>
+        <ul role="list">
+          <li><a href="#empresa">Empresa</a></li>
+          <li><a href="#diferenciais">Infraestrutura</a></li>
+          <li><a href="#cases">Portfólio</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul role="list">
+          <li><a href="mailto:comercial@conmec.com.br">comercial@conmec.com.br</a></li>
+          <li><a href="https://conmec.com.br" target="_blank" rel="noopener noreferrer">conmec.com.br</a></li>
+        </ul>
+        <div class="certificacoes">
+          <span class="badge-iso">ISO 9001:2015</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 Conmec Industrial. Todos os direitos reservados.</p>
+        <p><a href="#">Política de Privacidade</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- STICKY CTA MOBILE -->
+  <div class="sticky-cta-mobile" id="sticky-cta" aria-hidden="true">
+    <a href="#contato" class="btn btn-primary btn-full">→ Fale com o Comercial</a>
+  </div>
+
+  <script src="./assets/js/main.js" defer></script>
+</body>
+</html>
