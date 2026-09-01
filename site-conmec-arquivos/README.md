@@ -1,51 +1,44 @@
-# Site Conmec Industrial — Arquivos do Projeto
+# Conmec Industrial — Site Institucional
 
-Este diretório contém todos os arquivos de desenvolvimento do novo site institucional da **Conmec Industrial**.
+Repositório de desenvolvimento do novo site institucional da **Conmec Industrial**.
 
-## Estrutura
+## Estrutura do Projeto
 
 ```
 site-conmec-arquivos/
 ├── src/
-│   ├── index.html          ← Página principal (Home)
-│   ├── components/         ← Componentes reutilizáveis (header, footer, etc.)
-│   ├── layout/             ← Arquivos de layout base
-│   └── sections/           ← Seções isoladas da homepage
+│   ├── index.html          ← Homepage principal
+│   ├── components/         ← Componentes reutilizáveis (header, footer etc.)
+│   ├── layout/             ← Estruturas de layout base
+│   └── sections/           ← Seções individuais da página
 ├── assets/
-│   ├── images/             ← Imagens e fotos
+│   ├── images/             ← Imagens e fotos do projeto
 │   └── icons/              ← Ícones SVG
 ├── styles/
-│   └── main.css            ← CSS principal (design tokens + componentes)
+│   └── main.css            ← Estilos globais e sistema visual
 └── docs/
-    ├── project-structure.md    ← Documentação da estrutura
-    └── elementor-mapping.md    ← Mapeamento para Elementor (Fase 07)
+    ├── project-structure.md   ← Documentação da estrutura
+    └── elementor-mapping.md   ← Mapeamento para WordPress/Elementor
 ```
 
-## Como revisar o layout
+## Sobre o Projeto
 
-Abra o arquivo `src/index.html` diretamente no navegador, ou utilize um servidor local:
+**Cliente:** Conmec Industrial  
+**Objetivo:** Novo site institucional com foco em autoridade, credibilidade e geração de leads B2B.  
+**Stack:** HTML5 + CSS3 + JavaScript (vanilla) — compatível com futuro porte para WordPress + Elementor.
 
-```bash
-npx serve site-conmec-arquivos/src
-```
+## Como Revisar o Layout
 
-## Fases de execução
+Abra diretamente o arquivo `src/index.html` no navegador para visualizar o layout completo.
 
-- [x] Fase 01 — Estrutura do repositório
-- [ ] Fase 02 — Arquitetura HTML
-- [ ] Fase 03 — Sistema Visual (CSS)
-- [ ] Fase 04 — Hero e seções de topo
-- [ ] Fase 05 — Seções restantes e footer
-- [ ] Fase 06 — Responsividade e refinamento
-- [ ] Fase 07 — Mapeamento Elementor
-- [ ] Fase 08 — Revisão final e entrega
+## Próximos Passos
 
-## Identidade Visual
-
-- **Cor principal (CTA/destaque):** `#E39A38` — Âmbar Conmec
-- **Cor secundária (fundos escuros):** `#133B5C` — Azul Industrial
-- **Fonte de títulos:** Blatant (substituição web: Montserrat ExtraBold)
-- **Fonte de corpo:** Inter
+1. Aprovação do layout HTML/CSS pelo cliente
+2. Porte para WordPress com tema base (Hello Elementor)
+3. Replicação seção a seção via Elementor Pro
+4. SEO on-page e configuração de formulários
+5. Testes de performance (LCP, CLS, INP) e go-live
 
 ---
-Desenvolvido por [LP Design](https://lpdesign.com.br)
+
+Desenvolvido por **LP Design**
