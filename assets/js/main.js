@@ -1,105 +1,160 @@
-/* ==========================================================================
+/* =================================================================
    CONMEC INDUSTRIAL — main.js
-   ========================================================================== */
+   ================================================================= */
 
-/* --- Header scroll behavior --- */
-const header = document.getElementById('site-header');
-const scrollThreshold = 80;
+// ── Lucide icons init ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 
-const handleHeaderScroll = () => {
-  if (window.scrollY > scrollThreshold) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-};
-
-window.addEventListener('scroll', handleHeaderScroll, { passive: true });
-handleHeaderScroll();
-
-/* --- Hamburger / Mobile menu --- */
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobile-menu');
-
-hamburger.addEventListener('click', () => {
-  const isOpen = mobileMenu.classList.toggle('open');
-  hamburger.classList.toggle('open', isOpen);
-  hamburger.setAttribute('aria-expanded', isOpen);
-  mobileMenu.setAttribute('aria-hidden', !isOpen);
-  document.body.style.overflow = isOpen ? 'hidden' : '';
+  initHeader();
+  initMobileMenu();
+  initReveal();
+  initCounters();
+  initForm();
 });
 
-// Fechar menu ao clicar em link
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    hamburger.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+// ── Header scroll ─────────────────────────────────────────────────
+function initHeader() {
+  const header = document.getElementById('site-header');
+  if (!header) return;
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+// ── Mobile menu ───────────────────────────────────────────────────
+function initMobileMenu() {
+  const btn  = document.getElementById('hamburger');
+  const menu = document.getElementById('mobile-menu');
+  if (!btn || !menu) return;
+
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-hidden', String(!open));
+    document.body.style.overflow = open ? 'hidden' : '';
   });
-});
 
-/* --- Contadores animados --- */
-const animateCounter = (el) => {
-  const target = parseInt(el.dataset.target, 10);
-  const duration = 1800;
-  const startTime = performance.now();
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+  });
+}
 
-  const easeOutQuart = t => 1 - Math.pow(1 - t, 4);
+// ── Scroll reveal ─────────────────────────────────────────────────
+function initReveal() {
+  const els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
 
-  const update = (currentTime) => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const value = Math.round(easeOutQuart(progress) * target);
-    el.textContent = value >= 1000 ? value.toLocaleString('pt-BR') : value;
-    if (progress < 1) requestAnimationFrame(update);
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  els.forEach(el => observer.observe(el));
+}
+
+// ── Animated counters ─────────────────────────────────────────────
+function initCounters() {
+  const nums = document.querySelectorAll('.numero[data-target]');
+  if (!nums.length) return;
+
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+  const animate = (el, target) => {
+    const duration = target > 1000 ? 2200 : 1600;
+    const start = performance.now();
+    const isLarge = target >= 1000;
+
+    const step = (now) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const current = Math.round(easeOut(progress) * target);
+      el.textContent = isLarge
+        ? current.toLocaleString('pt-BR')
+        : current;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = isLarge ? target.toLocaleString('pt-BR') : target;
+    };
+    requestAnimationFrame(step);
   };
 
-  requestAnimationFrame(update);
-};
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => {
+      if (e.isIntersecting) {
+        const target = parseInt(e.target.dataset.target, 10);
+        animate(e.target, target);
+        observer.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.4 }
+  );
 
-// Intersection Observer para disparar contadores
-const counters = document.querySelectorAll('.numero[data-target]');
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateCounter(entry.target);
-      counterObserver.unobserve(entry.target);
+  nums.forEach(el => observer.observe(el));
+}
+
+// ── Form handling ─────────────────────────────────────────────────
+function initForm() {
+  const form = document.getElementById('form-contato');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const required = form.querySelectorAll('[required]');
+    let valid = true;
+
+    required.forEach(field => {
+      field.style.borderColor = '';
+      if (!field.value.trim()) {
+        field.style.borderColor = '#E39A38';
+        valid = false;
+      }
+    });
+
+    if (!valid) {
+      const first = form.querySelector('[required]:invalid, [required][style*="E39A38"]');
+      if (first) first.focus();
+      return;
     }
+
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Mensagem enviada!';
+    btn.style.background = '#437a22';
+    btn.style.borderColor = '#437a22';
+
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      form.reset();
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }, 3500);
   });
-}, { threshold: 0.5 });
 
-counters.forEach(counter => counterObserver.observe(counter));
-
-/* --- Scroll reveal --- */
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.servico-card, .case-card, .diferencial-item, .setor-item').forEach(el => {
-  el.classList.add('reveal');
-  revealObserver.observe(el);
-});
-
-/* --- Lucide icons --- */
-if (typeof lucide !== 'undefined') lucide.createIcons();
-
-/* --- Sticky CTA mobile --- */
-const stickyCTA = document.getElementById('sticky-cta');
-const ctaSection = document.getElementById('contato');
-
-const ctaObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (stickyCTA) {
-      stickyCTA.style.display = entry.isIntersecting ? 'none' : '';
-    }
-  });
-}, { threshold: 0.1 });
-
-if (ctaSection) ctaObserver.observe(ctaSection);
+  // Máscara de telefone simples
+  const tel = document.getElementById('telefone');
+  if (tel) {
+    tel.addEventListener('input', () => {
+      let v = tel.value.replace(/\D/g, '').substring(0, 11);
+      if (v.length >= 11) v = v.replace(/(\d{2})(\d{1})(\d{4})(\d{4})/, '($1) $2 $3-$4');
+      else if (v.length >= 7)  v = v.replace(/(\d{2})(\d{4,5})(\d{0,4})/, '($1) $2-$3');
+      else if (v.length >= 3)  v = v.replace(/(\d{2})(\d+)/, '($1) $2');
+      tel.value = v;
+    });
+  }
+}
