@@ -3,61 +3,745 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Conmec Industrial — Credibilidade e Confiança que geram resultados. Montagem industrial, manutenção metalmecânica, fabricação de equipamentos, caldeiras e vasos de pressão em Aracruz (ES).">
-  <meta name="keywords" content="montagem industrial, manutenção metalmecânica, fabricação equipamentos, caldeiras, vasos de pressão, Aracruz, Espírito Santo">
-  <meta property="og:title" content="Conmec Industrial — Engenharia Industrial de Alta Complexidade">
-  <meta property="og:description" content="Há mais de 30 anos executamos projetos de alta complexidade para as maiores indústrias do Brasil.">
-  <meta property="og:type" content="website">
+  <meta name="description" content="Conmec Industrial — Credibilidade e Confiança que geram resultados. Mais de 30 anos em montagem industrial, manutenção e fabricação de equipamentos para as maiores indústrias do Brasil.">
   <title>Conmec Industrial — Engenharia Industrial de Alta Complexidade</title>
 
-  <!-- Fontes -->
+  <!-- Fonts: Cal Sans, IBM Plex Sans Condensed, Roboto Flex -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,500;8..144,600;8..144,700;8..144,800;8..144,900&display=swap" rel="stylesheet">
+  <!-- Cal Sans via CDN -->
+  <link href="https://api.fontshare.com/v2/css?f[]=cal-sans@400&display=swap" rel="stylesheet">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
 
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <!-- Skip link -->
-  <style>.skip-link{position:absolute;left:-9999px;top:0;z-index:999;padding:.5rem 1rem;background:var(--ambar);color:var(--azul);font-weight:700;}.skip-link:focus{left:0;}</style>
+  <style>
+    /* ============================================
+       TOKENS — extraídos fielmente do Figma
+    ============================================ */
+    :root {
+      --amber:     #C9A338;
+      --amber-alt: #E39A38;
+      --navy:      #213843;
+      --navy-dark: #133B5C;
+      --navy-deep: #1C2C35;
+      --navy-mid:  #164363;
+      --dark:      #27343B;
+      --offwhite:  #F5F7F8;
+      --gray-bg:   #D5D5D5;
+      --white:     #FFFFFF;
+      --text-dark: #1E1E1E;
+
+      --font-display: 'Cal Sans', 'Georgia', serif;
+      --font-ui:      'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif;
+      --font-body:    'Roboto Flex', 'Roboto', sans-serif;
+
+      --radius-pill: 100px;
+      --radius-sm:   5px;
+
+      --container: 1114px;
+      --gap:       32px;
+    }
+
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--dark);
+      background: var(--offwhite);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+    address { font-style: normal; }
+
+    .skip-link {
+      position: absolute; left: -9999px; top: 0; z-index: 9999;
+      padding: 8px 16px; background: var(--amber); color: var(--navy);
+      font-family: var(--font-ui); font-weight: 700;
+    }
+    .skip-link:focus { left: 0; }
+
+    /* ============================================
+       CONTAINER
+    ============================================ */
+    .container {
+      max-width: var(--container);
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+
+    /* ============================================
+       BUTTONS
+    ============================================ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 18px 34px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-ui); font-weight: 700; font-size: 24px;
+      line-height: 1; transition: opacity .18s, transform .18s;
+      white-space: nowrap;
+    }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-amber { background: var(--amber); color: var(--navy); }
+    .btn-ghost-white {
+      background: rgba(217,217,217,.95); color: var(--dark);
+    }
+    .btn-outline {
+      background: transparent;
+      outline: 1px solid var(--dark); outline-offset: -1px;
+      color: var(--navy);
+    }
+    .btn-sm { font-size: 16px; padding: 10px 24px; }
+
+    /* ============================================
+       HEADER — pill flutuante
+    ============================================ */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding-top: 20px;
+    }
+    .header-inner {
+      display: flex; align-items: center; gap: 24px;
+      background: rgba(217,217,217,.95);
+      border-radius: var(--radius-pill);
+      padding: 14px 32px;
+      height: 76px;
+    }
+    .site-logo img {
+      width: 177px; height: 40px; object-fit: contain;
+    }
+    .site-logo .logo-fallback {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .site-logo .logo-fallback svg { flex-shrink: 0; }
+    .site-logo .logo-fallback .logo-text {
+      font-family: var(--font-ui); font-weight: 700;
+      font-size: 20px; color: var(--navy-dark); letter-spacing: 1px;
+    }
+    .site-logo .logo-fallback .logo-sub {
+      font-size: 9px; letter-spacing: 2px; color: var(--navy-dark); opacity: .6;
+      text-transform: uppercase; display: block; margin-top: -2px;
+    }
+
+    .main-nav { flex: 1; margin-left: 24px; }
+    .main-nav ul {
+      display: flex; gap: 28px; align-items: center;
+    }
+    .main-nav a {
+      font-family: var(--font-ui); font-weight: 700; font-size: 16px;
+      text-transform: uppercase; color: var(--navy-dark);
+      letter-spacing: .5px;
+      transition: color .18s;
+    }
+    .main-nav a:hover { color: var(--amber); }
+
+    .header-lang {
+      display: flex; gap: 4px; align-items: center;
+    }
+    .lang-btn {
+      width: 22px; height: 24px;
+      border-radius: var(--radius-sm);
+      border: .5px solid var(--navy-mid);
+      font-family: var(--font-ui); font-weight: 700; font-size: 14px;
+      text-transform: uppercase; color: var(--navy-dark);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      padding: 8px; cursor: pointer;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--navy-dark); border-radius: 2px;
+      transition: .25s;
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .section-hero {
+      position: relative;
+      height: 905px;
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(270deg, rgba(39,52,59,.60) 0%, rgba(33,56,67,.90) 89%);
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      padding-top: 76px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 48px; font-weight: 400;
+      line-height: 45px; letter-spacing: 2.4px;
+      color: var(--amber);
+      max-width: 640px;
+      margin-bottom: 30px;
+    }
+    .hero-desc {
+      font-family: var(--font-display);
+      font-size: 38px; font-weight: 400;
+      line-height: 40px; letter-spacing: 1.9px;
+      color: var(--offwhite);
+      max-width: 640px;
+      margin-bottom: 60px;
+    }
+    .hero-ctas {
+      display: flex; gap: 20px; flex-wrap: wrap;
+    }
+
+    /* ============================================
+       SOBRE / EMPRESA
+    ============================================ */
+    .section-sobre {
+      padding-top: 80px; padding-bottom: 80px;
+      background: linear-gradient(180deg, rgba(245,247,248,0) 0%, #D5D5D5 100%);
+    }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 795fr 560fr;
+      gap: 40px;
+      align-items: stretch;
+    }
+    .sobre-left {
+      background: var(--navy-deep);
+      padding: 60px 65px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      min-height: 754px;
+    }
+    .sobre-title {
+      font-family: var(--font-display);
+      font-size: 40px; font-weight: 400;
+      line-height: 45px; letter-spacing: 2px;
+      color: var(--amber);
+      max-width: 438px;
+      margin-bottom: 40px;
+    }
+    .sobre-body {
+      font-family: var(--font-body);
+      font-size: 16px; font-weight: 500;
+      line-height: 1.75; letter-spacing: .8px;
+      color: var(--offwhite);
+      max-width: 438px;
+      margin-bottom: 40px;
+    }
+    .sobre-body strong { font-weight: 900; }
+    .sobre-stats {
+      list-style: none;
+      border-top: .5px solid var(--amber);
+    }
+    .sobre-stats li {
+      padding: 12px 0;
+      border-bottom: .5px solid var(--amber);
+      font-family: var(--font-body); font-size: 16px;
+      color: var(--offwhite);
+      display: flex; align-items: center; gap: 10px;
+      letter-spacing: .8px;
+    }
+    .sobre-stats li .icon-check {
+      width: 20px; height: 20px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sobre-stats .stat-val {
+      font-weight: 900; color: var(--amber); font-size: 18px; letter-spacing: .9px;
+    }
+    .sobre-cta { margin-top: 48px; }
+
+    .sobre-right img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 3px;
+      min-height: 698px;
+    }
+
+    /* ============================================
+       SERVIÇOS — carrossel
+    ============================================ */
+    .section-servicos {
+      padding: 80px 0;
+      overflow: hidden;
+    }
+    .section-label {
+      font-family: var(--font-body);
+      font-weight: 800; font-size: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px; line-height: 45px;
+      margin-bottom: 40px;
+    }
+    .section-label .accent { color: var(--amber-alt); }
+    .section-label .plain  { color: var(--dark); font-weight: 600; font-size: 28px; letter-spacing: 1.4px; }
+
+    .servicos-carousel-wrap {
+      position: relative;
+    }
+    .servicos-carousel {
+      display: flex; gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+    .servicos-carousel::-webkit-scrollbar { display: none; }
+
+    .servico-card {
+      flex: 0 0 373px;
+      scroll-snap-align: start;
+      position: relative;
+      border-radius: 3px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--gray-bg) 84%);
+    }
+    .servico-card img {
+      width: 373px; height: 480px;
+      object-fit: cover; display: block;
+    }
+    .servico-card-label {
+      position: absolute;
+      bottom: 24px; left: 24px; right: 24px;
+      font-family: var(--font-display);
+      font-size: 24px; font-weight: 400;
+      line-height: 24px; letter-spacing: 1.2px;
+      color: var(--dark);
+    }
+
+    .carousel-btn {
+      width: 45px; height: 45px;
+      border-radius: 50%;
+      background: var(--navy-mid);
+      color: var(--amber);
+      font-family: 'Acme', 'Georgia', serif;
+      font-size: 28px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 2; cursor: pointer;
+      border: none; transition: background .18s;
+    }
+    .carousel-btn:hover { background: var(--navy-dark); }
+    .carousel-btn.prev { left: -22px; }
+    .carousel-btn.next { right: -22px; }
+
+    /* ============================================
+       SETORES
+    ============================================ */
+    .section-setores {
+      padding: 80px 0;
+    }
+    .setores-pills {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      margin-top: 40px;
+    }
+    .setor-pill {
+      height: 67px;
+      padding: 18px 34px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--dark);
+      font-family: var(--font-ui); font-weight: 700; font-size: 24px;
+      color: var(--navy);
+      transition: background .18s, color .18s;
+      display: flex; align-items: center;
+    }
+    .setor-pill:hover {
+      background: var(--navy); color: var(--offwhite);
+    }
+    .setores-desc {
+      max-width: 729px;
+      margin-top: 40px;
+      font-family: var(--font-body); font-size: 22px; font-weight: 500;
+      letter-spacing: 1.1px; line-height: 1.5;
+      color: var(--text-dark);
+      text-align: center;
+      margin-inline: auto;
+    }
+
+    /* ============================================
+       PORTFÓLIO / CASES
+    ============================================ */
+    .section-portfolio {
+      padding: 80px 0;
+      background: var(--offwhite);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .portfolio-card {
+      border-radius: 4px; overflow: hidden;
+      background: white;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .portfolio-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.13);
+    }
+    .portfolio-card img {
+      width: 100%; height: 240px; object-fit: cover;
+    }
+    .portfolio-card-info {
+      padding: 24px;
+    }
+    .portfolio-card-client {
+      font-family: var(--font-ui); font-weight: 700; font-size: 14px;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--amber);
+    }
+    .portfolio-card-title {
+      font-family: var(--font-display); font-size: 22px; font-weight: 400;
+      color: var(--navy-dark); margin-top: 6px; line-height: 1.3;
+    }
+    .portfolio-card-meta {
+      display: flex; align-items: center; gap: 6px;
+      margin-top: 10px;
+      font-family: var(--font-body); font-size: 14px;
+      color: var(--dark); opacity: .7;
+    }
+
+    /* ============================================
+       CLIENTES
+    ============================================ */
+    .section-clientes {
+      padding: 60px 0;
+      background: white;
+    }
+    .clientes-track-wrap { overflow: hidden; }
+    .clientes-track {
+      display: flex; gap: 48px;
+      animation: ticker 22s linear infinite;
+      width: max-content;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .client-name {
+      font-family: var(--font-ui); font-weight: 700; font-size: 22px;
+      color: var(--navy); opacity: .55; letter-spacing: 1px;
+      white-space: nowrap;
+      transition: opacity .18s;
+    }
+    .clientes-track li:hover .client-name { opacity: 1; }
+
+    /* ============================================
+       DIFERENCIAIS
+    ============================================ */
+    .section-diferenciais {
+      background: var(--navy-dark);
+      padding: 80px 0;
+      color: var(--offwhite);
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 48px;
+    }
+    .diff-item {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .diff-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(201,163,56,.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--amber);
+    }
+    .diff-title {
+      font-family: var(--font-display); font-size: 20px;
+      color: var(--offwhite); margin-bottom: 8px;
+    }
+    .diff-desc {
+      font-family: var(--font-body); font-size: 15px;
+      color: rgba(245,247,248,.7); line-height: 1.6;
+    }
+
+    /* ============================================
+       CONTATO
+    ============================================ */
+    .section-contato {
+      padding: 80px 0;
+    }
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contato-title {
+      font-family: var(--font-display); font-size: 40px;
+      color: var(--navy-dark); line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .contato-sub {
+      font-family: var(--font-body); font-size: 16px;
+      color: var(--dark); margin-bottom: 32px; line-height: 1.6;
+    }
+    .contato-lista { display: flex; flex-direction: column; gap: 16px; }
+    .contato-lista li a, .contato-lista li span {
+      display: flex; gap: 12px; align-items: center;
+      font-family: var(--font-body); font-size: 16px; color: var(--dark);
+    }
+    .contato-lista li svg { color: var(--amber); }
+
+    .form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-family: var(--font-ui); font-weight: 700; font-size: 14px;
+      color: var(--navy-dark); text-transform: uppercase; letter-spacing: .5px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 14px 16px;
+      border: 1px solid rgba(19,59,92,.25);
+      border-radius: 8px;
+      font-family: var(--font-body); font-size: 16px;
+      color: var(--dark);
+      background: white;
+      transition: border-color .18s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--amber);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .btn-submit {
+      background: var(--amber); color: var(--navy);
+      border-radius: var(--radius-pill); border: none;
+      padding: 18px 34px;
+      font-family: var(--font-ui); font-weight: 700; font-size: 22px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: opacity .18s;
+    }
+    .btn-submit:hover { opacity: .88; }
+
+    /* ============================================
+       SECTION HEADERS reutilizáveis
+    ============================================ */
+    .section-header {
+      margin-bottom: 48px;
+    }
+    .section-header--light .section-title { color: var(--offwhite); }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 40px; font-weight: 400;
+      line-height: 1.15; letter-spacing: 2px;
+      color: var(--amber); margin-bottom: 16px;
+    }
+    .section-desc {
+      font-family: var(--font-body); font-size: 16px;
+      line-height: 1.7; color: var(--dark);
+      max-width: 600px;
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    .site-footer {
+      background: var(--navy-deep);
+      color: var(--offwhite);
+      padding: 64px 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-logo { margin-bottom: 20px; }
+    .footer-logo img { width: 160px; height: auto; }
+    .footer-brand address {
+      font-size: 14px; line-height: 1.8;
+      color: rgba(245,247,248,.6);
+    }
+    .footer-brand address a { color: rgba(245,247,248,.6); }
+    .footer-brand address a:hover { color: var(--amber); }
+    .footer-cert {
+      margin-top: 16px;
+      display: inline-block;
+      padding: 6px 14px;
+      border: 1px solid var(--amber);
+      border-radius: 4px;
+      font-family: var(--font-ui); font-weight: 700; font-size: 13px;
+      color: var(--amber); letter-spacing: 1px;
+    }
+    .footer-col h4 {
+      font-family: var(--font-ui); font-weight: 700; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--amber); margin-bottom: 16px;
+    }
+    .footer-col ul li + li { margin-top: 10px; }
+    .footer-col ul a {
+      font-family: var(--font-body); font-size: 14px;
+      color: rgba(245,247,248,.6); transition: color .18s;
+    }
+    .footer-col ul a:hover { color: var(--offwhite); }
+    .footer-bottom {
+      margin-top: 48px;
+      border-top: 1px solid rgba(245,247,248,.1);
+      padding: 20px 0;
+    }
+    .footer-bottom .container {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p, .footer-bottom a {
+      font-family: var(--font-body); font-size: 13px;
+      color: rgba(245,247,248,.4);
+    }
+    .footer-bottom a:hover { color: var(--offwhite); }
+
+    /* ============================================
+       STICKY MOBILE CTA
+    ============================================ */
+    .sticky-mobile {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
+      padding: 12px 16px;
+      background: white;
+      box-shadow: 0 -2px 16px rgba(0,0,0,.1);
+    }
+    .sticky-mobile .btn {
+      width: 100%; justify-content: center;
+      font-size: 18px;
+    }
+
+    /* ============================================
+       MOBILE MENU OVERLAY
+    ============================================ */
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 99;
+      background: var(--navy-deep);
+      padding: 80px 32px 40px;
+      flex-direction: column; gap: 32px;
+    }
+    .mobile-menu.is-open { display: flex; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 24px; }
+    .mobile-menu a {
+      font-family: var(--font-ui); font-weight: 700; font-size: 24px;
+      color: var(--offwhite); text-transform: uppercase;
+    }
+    .mobile-menu a:hover { color: var(--amber); }
+    .mobile-close {
+      position: absolute; top: 20px; right: 24px;
+      color: var(--offwhite); font-size: 32px; cursor: pointer;
+    }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 1024px) {
+      .sobre-grid { grid-template-columns: 1fr; }
+      .sobre-right { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .main-nav { display: none; }
+      .header-lang { display: none; }
+      .hamburger { display: flex; }
+
+      .hero-title { font-size: 32px; line-height: 36px; }
+      .hero-desc { font-size: 22px; line-height: 28px; }
+      .btn { font-size: 16px; padding: 14px 24px; }
+
+      .sobre-left { padding: 40px 24px; }
+      .section-title { font-size: 30px; }
+
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .contato-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+
+      .sticky-mobile { display: block; }
+      body { padding-bottom: 72px; }
+    }
+
+    @media (max-width: 480px) {
+      .section-hero { height: 100dvh; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
 </head>
 <body>
 
-  <a class="skip-link" href="#main-content">Ir para o conteúdo</a>
+  <a href="#main-content" class="skip-link">Pular para o conteúdo</a>
 
-  <!-- ======== HEADER ======== -->
+  <!-- ==================== HEADER ==================== -->
   <header class="site-header" id="site-header">
-    <div class="container header-inner">
+    <div class="container">
+      <div class="header-inner">
 
-      <a href="#" class="logo" aria-label="Conmec Industrial — Página inicial">
-        <!-- Logo SVG inline como fallback sempre disponível -->
-        <svg class="logo-svg" width="160" height="44" viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Conmec Industrial">
-          <rect x="0" y="14" width="6" height="16" fill="#E39A38"/>
-          <rect x="8" y="8" width="6" height="28" fill="#E39A38"/>
-          <rect x="16" y="2" width="6" height="40" fill="#E39A38"/>
-          <text x="28" y="30" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="20" fill="#FFFFFF" letter-spacing="1">CONMEC</text>
-          <text x="28" y="42" font-family="Inter,Arial,sans-serif" font-weight="500" font-size="8" fill="rgba(255,255,255,0.65)" letter-spacing="2.5">INDUSTRIAL</text>
-        </svg>
-      </a>
-
-      <nav class="main-nav" aria-label="Navegação principal">
-        <ul role="list">
-          <li><a href="#empresa">Empresa</a></li>
-          <li><a href="#servicos">Serviços</a></li>
-          <li><a href="#cases">Portfólio</a></li>
-          <li><a href="#diferenciais">Diferenciais</a></li>
-          <li><a href="#contato">Contato</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <a href="tel:+55273000-0000" class="header-phone" aria-label="Ligar para Conmec">
-          <i data-lucide="phone" aria-hidden="true"></i>
-          <span>(27) 3000-0000</span>
+        <a href="#" class="site-logo" aria-label="Conmec Industrial — Página inicial">
+          <img
+            src="./site-conmec-arquivos/assets/images/logo-conmec-horizontal.png"
+            alt="Conmec Industrial"
+            width="177" height="40"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          >
+          <!-- Fallback SVG fiel ao estilo Conmec -->
+          <span class="logo-fallback" style="display:none">
+            <svg width="32" height="40" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="0"  y="14" width="8" height="26" rx="1" fill="#C9A338"/>
+              <rect x="10" y="8"  width="8" height="32" rx="1" fill="#C9A338"/>
+              <rect x="20" y="0"  width="8" height="40" rx="1" fill="#C9A338"/>
+            </svg>
+            <span>
+              <span class="logo-text">CONMEC</span>
+              <span class="logo-sub">INDUSTRIAL</span>
+            </span>
+          </span>
         </a>
-        <a href="#contato" class="btn btn-primary">Fale Conosco</a>
-        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
+
+        <nav class="main-nav" aria-label="Navegação principal">
+          <ul role="list">
+            <li><a href="#">Home</a></li>
+            <li><a href="#empresa">Empresa</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#infraestrutura">Infraestrutura</a></li>
+            <li><a href="#setores">Onde Atuamos</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-lang" aria-label="Idioma">
+          <button class="lang-btn" aria-pressed="true">ES</button>
+          <button class="lang-btn">En</button>
+        </div>
+
+        <button class="hamburger" id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -65,416 +749,377 @@
   </header>
 
   <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true" role="dialog" aria-label="Menu de navegação">
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Menu">
+    <button class="mobile-close" id="mobile-close" aria-label="Fechar menu">&#x2715;</button>
     <nav>
       <ul role="list">
+        <li><a href="#">Home</a></li>
         <li><a href="#empresa">Empresa</a></li>
         <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#cases">Portfólio</a></li>
-        <li><a href="#diferenciais">Diferenciais</a></li>
+        <li><a href="#infraestrutura">Infraestrutura</a></li>
+        <li><a href="#setores">Onde Atuamos</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
-      <a href="#contato" class="btn btn-primary btn-full" style="margin-top:1.5rem">Fale com o Comercial</a>
     </nav>
+    <a href="#contato" class="btn btn-amber" style="margin-top:auto">Fale com o Comercial</a>
   </div>
 
   <main id="main-content">
 
-    <!-- ======== HERO ======== -->
-    <section class="hero" id="hero" aria-label="Apresentação Conmec Industrial">
-      <img
-        class="hero-bg-img"
-        src="https://images.unsplash.com/photo-1530533718754-001d2668365a?w=1920&q=85&auto=format&fit=crop"
-        alt=""
-        aria-hidden="true"
-        width="1920" height="1080"
-        loading="eager"
-        decoding="async"
-      />
-      <div class="hero-overlay" aria-hidden="true"></div>
+    <!-- ==================== HERO ==================== -->
+    <section class="section-hero" id="hero" aria-label="Conmec Industrial — Apresentação">
+      <div class="hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1530533718754-001d2668365a?w=1920&q=85&auto=format&fit=crop"
+          alt=""
+          aria-hidden="true"
+          width="1920" height="1080"
+          loading="eager" decoding="async"
+        >
+        <div class="hero-overlay" aria-hidden="true"></div>
+      </div>
 
       <div class="container hero-content">
-        <div class="hero-text">
-          <p class="eyebrow">Aracruz, ES · Desde 1994</p>
-          <h1>Credibilidade e Confiança<br>que geram resultados.</h1>
-          <p class="hero-desc">Há mais de 30 anos executamos projetos de alta complexidade para as maiores indústrias do Brasil e da América Latina — com infraestrutura própria de 22.000&nbsp;m², gestão experiente e tecnologia robótica pioneira no Espírito Santo.</p>
-          <div class="hero-ctas">
-            <a href="#contato" class="btn btn-primary btn-lg">Fale com o Comercial</a>
-            <a href="#servicos" class="btn btn-ghost btn-lg">Conheça nossos serviços</a>
-          </div>
-          <div class="hero-selos" aria-label="Certificações">
-            <span class="selo"><i data-lucide="shield-check" aria-hidden="true"></i> ISO 9001</span>
-            <span class="selo"><i data-lucide="award" aria-hidden="true"></i> NR-13 Habilitado</span>
-            <span class="selo"><i data-lucide="map-pin" aria-hidden="true"></i> Aracruz, ES</span>
-          </div>
+        <h1 class="hero-title">
+          Conmec Industrial<br>
+          Credibilidade e Confiança<br>
+          que geram resultados.
+        </h1>
+        <p class="hero-desc">
+          Há mais de 30 anos executamos projetos de alta complexidade para as maiores indústrias do Brasil e da América Latina.
+        </p>
+        <div class="hero-ctas">
+          <a href="#contato" class="btn btn-amber">Fale com o Comercial</a>
+          <a href="#servicos" class="btn btn-ghost-white">Conheça nossos serviços</a>
         </div>
       </div>
-
-      <a href="#credibilidade" class="hero-scroll-hint" aria-label="Rolar para baixo">
-        <span></span>
-      </a>
     </section>
 
-    <!-- ======== NÚMEROS DE CREDIBILIDADE ======== -->
-    <section class="credibilidade" id="credibilidade" aria-label="Indicadores de credibilidade">
-      <div class="container">
-        <ul class="numeros-grid" role="list">
-          <li class="numero-item">
-            <span class="numero" data-target="30">0</span><span class="numero-sufixo">+</span>
-            <span class="numero-label">anos de experiência</span>
-          </li>
-          <li class="numero-item">
-            <span class="numero" data-target="22000">0</span><span class="numero-sufixo">m²</span>
-            <span class="numero-label">infraestrutura própria</span>
-          </li>
-          <li class="numero-item">
-            <span class="numero" data-target="150">0</span><span class="numero-sufixo">t/mês</span>
-            <span class="numero-label">capacidade fabril</span>
-          </li>
-          <li class="numero-item">
-            <span class="numero" data-target="130">0</span><span class="numero-sufixo">+</span>
-            <span class="numero-label">colaboradores</span>
-          </li>
-          <li class="numero-item">
-            <span class="numero-text">ISO</span><span class="numero-sufixo">9001</span>
-            <span class="numero-label">certificada</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ======== SOBRE ======== -->
-    <section class="sobre section-pad" id="empresa">
+    <!-- ==================== SOBRE / EMPRESA ==================== -->
+    <section class="section-sobre" id="empresa">
       <div class="container">
         <div class="sobre-grid">
-          <div class="sobre-texto reveal">
-            <p class="eyebrow">Quem Somos</p>
-            <h2>Engenharia de alta complexidade, entregue com precisão.</h2>
-            <p>A Conmec Industrial é especializada em montagem industrial, manutenção metalmecânica e fabricação de estruturas de grande porte. Com mais de três décadas de atuação, consolidamos uma reputação de excelência técnica e parceria real com nossos clientes.</p>
-            <p>Nossa infraestrutura própria de 22.000&nbsp;m² em Aracruz (ES), aliada à tecnologia robótica de corte e solda — pioneira no Espírito Santo —, nos permite assumir projetos de qualquer escala com controle total do processo produtivo.</p>
-            <ul class="sobre-pontos" role="list">
-              <li><i data-lucide="check-circle" aria-hidden="true"></i> Execução in loco ou em nossa planta fabril</li>
-              <li><i data-lucide="check-circle" aria-hidden="true"></i> Gestão própria de projetos — sem subcontratação estratégica</li>
-              <li><i data-lucide="check-circle" aria-hidden="true"></i> Equipes de soldagem qualificadas NR-13 e LP</li>
-            </ul>
-            <a href="#contato" class="btn btn-outline" style="margin-top:1.5rem">Conheça nossa história</a>
+
+          <div class="sobre-left reveal">
+            <div>
+              <h2 class="sobre-title">O que nos qualifica para grandes projetos</h2>
+              <p class="sobre-body">
+                A grande indústria não aceita improviso. Projetos de alta complexidade exigem uma empresa que conheça o processo do cliente, tenha estrutura para executar e gestão que responda quando o prazo aperta.<br><br>
+                A <strong>Conmec Industrial</strong> foi fundada há mais de 30 anos em Aracruz, Espírito Santo, para ser exatamente esse parceiro, especializado em fabricação, montagem e manutenção metalmecânica para os maiores grupos industriais do Brasil.
+              </p>
+              <ul class="sobre-stats" role="list">
+                <li>
+                  <span class="icon-check" aria-hidden="true">
+                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><rect width="14" height="11" rx="1" stroke="#E39A38" stroke-width="2"/></svg>
+                  </span>
+                  <span><span class="stat-val">+30 anos</span> de experiência</span>
+                </li>
+                <li>
+                  <span class="icon-check" aria-hidden="true">
+                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><rect width="14" height="11" rx="1" stroke="#E39A38" stroke-width="2"/></svg>
+                  </span>
+                  <span><span class="stat-val">22.000 m²</span> de infraestrutura própria</span>
+                </li>
+                <li>
+                  <span class="icon-check" aria-hidden="true">
+                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><rect width="14" height="11" rx="1" stroke="#E39A38" stroke-width="2"/></svg>
+                  </span>
+                  <span>Até <span class="stat-val">150 toneladas/mês</span> de capacidade fabril</span>
+                </li>
+                <li>
+                  <span class="icon-check" aria-hidden="true">
+                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><rect width="14" height="11" rx="1" stroke="#E39A38" stroke-width="2"/></svg>
+                  </span>
+                  <span>Atuação em todo o <span class="stat-val">Brasil</span> e <span class="stat-val">América Latina</span></span>
+                </li>
+                <li>
+                  <span class="icon-check" aria-hidden="true">
+                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><rect width="14" height="11" rx="1" stroke="#E39A38" stroke-width="2"/></svg>
+                  </span>
+                  <span><span class="stat-val">ISO 9001:2015</span> certificada</span>
+                </li>
+              </ul>
+            </div>
+            <div class="sobre-cta">
+              <a href="#contato" class="btn btn-amber">Conheça a Conmec</a>
+            </div>
           </div>
-          <div class="sobre-imagem reveal reveal-delay-2">
+
+          <div class="sobre-right reveal">
             <img
               src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=900&q=85&auto=format&fit=crop"
               alt="Equipe técnica Conmec em operação na planta industrial de Aracruz"
-              width="900" height="600"
+              width="560" height="698"
               loading="lazy" decoding="async"
-            />
-            <div class="sobre-badge" aria-label="30 anos de experiência">
-              <span class="badge-numero">30</span>
-              <span class="badge-texto">anos de<br>mercado</span>
-            </div>
+            >
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ======== SERVIÇOS ======== -->
-    <section class="servicos section-pad" id="servicos">
+    <!-- ==================== SERVIÇOS ==================== -->
+    <section class="section-servicos" id="servicos">
       <div class="container">
-        <div class="section-header reveal">
-          <p class="eyebrow">O que fazemos</p>
-          <h2>Serviços que sustentam<br>operações industriais</h2>
-          <p>Da montagem à manutenção — soluções completas para as exigências de plantas industriais de grande porte.</p>
+        <p class="section-label">
+          <span class="accent">SERVIÇOS |</span>
+          <span class="plain"> O que fazemos</span>
+        </p>
+
+        <div class="servicos-carousel-wrap">
+          <button class="carousel-btn prev" id="carousel-prev" aria-label="Serviço anterior">&lt;</button>
+          <button class="carousel-btn next" id="carousel-next" aria-label="Próximo serviço">&gt;</button>
+
+          <ul class="servicos-carousel" id="servicos-carousel" role="list">
+            <li class="servico-card">
+              <img
+                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&auto=format&fit=crop"
+                alt="Montagem de estruturas industriais de grande porte"
+                width="373" height="480" loading="lazy" decoding="async"
+              >
+              <div class="servico-card-label">Montagem Industrial</div>
+            </li>
+            <li class="servico-card">
+              <img
+                src="https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=600&q=80&auto=format&fit=crop"
+                alt="Parada programada de planta industrial"
+                width="373" height="480" loading="lazy" decoding="async"
+              >
+              <div class="servico-card-label">Paradas<br>de Planta</div>
+            </li>
+            <li class="servico-card">
+              <img
+                src="https://images.unsplash.com/photo-1561144257-e32e8506b1e3?w=600&q=80&auto=format&fit=crop"
+                alt="Fabricação e recuperação de equipamentos industriais"
+                width="373" height="480" loading="lazy" decoding="async"
+              >
+              <div class="servico-card-label">Fabricação e Recuperação de Equipamentos</div>
+            </li>
+            <li class="servico-card">
+              <img
+                src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80&auto=format&fit=crop"
+                alt="Manutenção metalmecânica industrial"
+                width="373" height="480" loading="lazy" decoding="async"
+              >
+              <div class="servico-card-label">Manutenção Metalmecânica</div>
+            </li>
+            <li class="servico-card">
+              <img
+                src="https://images.unsplash.com/photo-1579366948929-444eb79881f1?w=600&q=80&auto=format&fit=crop"
+                alt="Manutenção em caldeiras e vasos de pressão NR-13"
+                width="373" height="480" loading="lazy" decoding="async"
+              >
+              <div class="servico-card-label">Manutenção<br>em Caldeiras<br>e Vasos de Pressão</div>
+            </li>
+          </ul>
         </div>
-        <ul class="servicos-grid" role="list">
-          <li class="servico-card reveal">
-            <div class="card-foto">
-              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&auto=format&fit=crop" alt="Montagem de estruturas industriais de grande porte" width="600" height="340" loading="lazy" decoding="async" />
-            </div>
-            <div class="card-body">
-              <h3>Montagem Industrial</h3>
-              <p>Montagem de equipamentos, estruturas metálicas e sistemas industriais de grande porte com equipes especializadas.</p>
-              <a href="#contato" class="card-link">Saiba mais <i data-lucide="arrow-right" aria-hidden="true"></i></a>
-            </div>
-          </li>
-          <li class="servico-card reveal reveal-delay-1">
-            <div class="card-foto">
-              <img src="https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=600&q=80&auto=format&fit=crop" alt="Parada programada de planta industrial" width="600" height="340" loading="lazy" decoding="async" />
-            </div>
-            <div class="card-body">
-              <h3>Paradas de Planta</h3>
-              <p>Planejamento e execução de paradas programadas com máximo controle de prazo e segurança operacional.</p>
-              <a href="#contato" class="card-link">Saiba mais <i data-lucide="arrow-right" aria-hidden="true"></i></a>
-            </div>
-          </li>
-          <li class="servico-card reveal reveal-delay-2">
-            <div class="card-foto">
-              <img src="https://images.unsplash.com/photo-1561144257-e32e8506b1e3?w=600&q=80&auto=format&fit=crop" alt="Fabricação e recuperação de equipamentos industriais" width="600" height="340" loading="lazy" decoding="async" />
-            </div>
-            <div class="card-body">
-              <h3>Fabricação e Recuperação de Equipamentos</h3>
-              <p>Fabricação sob medida e recuperação de equipamentos em nossa planta própria de 22.000&nbsp;m².</p>
-              <a href="#contato" class="card-link">Saiba mais <i data-lucide="arrow-right" aria-hidden="true"></i></a>
-            </div>
-          </li>
-          <li class="servico-card reveal">
-            <div class="card-foto">
-              <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80&auto=format&fit=crop" alt="Manutenção metalmecânica industrial" width="600" height="340" loading="lazy" decoding="async" />
-            </div>
-            <div class="card-body">
-              <h3>Manutenção Metalmecânica</h3>
-              <p>Manutenção corretiva e preventiva de sistemas metalmecânicos com equipes certificadas e resposta ágil.</p>
-              <a href="#contato" class="card-link">Saiba mais <i data-lucide="arrow-right" aria-hidden="true"></i></a>
-            </div>
-          </li>
-          <li class="servico-card reveal reveal-delay-1">
-            <div class="card-foto">
-              <img src="https://images.unsplash.com/photo-1579366948929-444eb79881f1?w=600&q=80&auto=format&fit=crop" alt="Manutenção de caldeiras e vasos de pressão NR-13" width="600" height="340" loading="lazy" decoding="async" />
-            </div>
-            <div class="card-body">
-              <h3>Caldeiras e Vasos de Pressão</h3>
-              <p>Manutenção especializada com inspetores qualificados LP e NR-13. Segurança e conformidade em cada intervenção.</p>
-              <a href="#contato" class="card-link">Saiba mais <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+    <!-- ==================== SETORES ==================== -->
+    <section class="section-setores" id="setores">
+      <div class="container">
+        <p class="section-label">
+          <span class="accent">SETORES ATENDIDOS |</span>
+          <span class="plain"> Atuamos onde o desafio é maior</span>
+        </p>
+        <ul class="setores-pills" role="list">
+          <li><a href="#setores" class="setor-pill">Papel e Celulose</a></li>
+          <li><a href="#setores" class="setor-pill">Siderurgia</a></li>
+          <li><a href="#setores" class="setor-pill">Química</a></li>
+          <li><a href="#setores" class="setor-pill">Energia</a></li>
+        </ul>
+        <p class="setores-desc reveal">
+          Com profundo conhecimento dos processos produtivos de cada setor, a Conmec entrega projetos alinhados às exigências técnicas e aos prazos críticos das operações industriais.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================== PORTFÓLIO ==================== -->
+    <section class="section-portfolio" id="portfolio">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Projetos que comprovam nossa capacidade</h2>
+        </div>
+        <ul class="portfolio-grid" role="list">
+          <li class="portfolio-card reveal">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop"
+              alt="Retrofit de difusores" width="600" height="240" loading="lazy" decoding="async">
+            <div class="portfolio-card-info">
+              <div class="portfolio-card-client">CMPC / Valmet — RS</div>
+              <h3 class="portfolio-card-title">Retrofit de 2 Difusores</h3>
+              <div class="portfolio-card-meta">
+                <i data-lucide="clock" style="width:14px;height:14px" aria-hidden="true"></i> Abr–Dez 2026
+              </div>
             </div>
           </li>
-          <li class="servico-card servico-card--destaque reveal reveal-delay-2">
-            <div class="card-body card-body--destaque">
-              <h3>Precisa de um orçamento rápido?</h3>
-              <p>Nossa equipe comercial responde em até 24 horas. Fale diretamente com quem decide.</p>
-              <a href="#contato" class="btn btn-primary" style="margin-top:1.5rem">Solicitar orçamento</a>
+          <li class="portfolio-card reveal">
+            <img src="https://images.unsplash.com/photo-1606765962248-7ff407b51667?w=600&q=80&auto=format&fit=crop"
+              alt="Reforma geral de caldeiras" width="600" height="240" loading="lazy" decoding="async">
+            <div class="portfolio-card-info">
+              <div class="portfolio-card-client">Gerdau Ouro Branco — MG</div>
+              <h3 class="portfolio-card-title">Reforma Geral de Caldeiras</h3>
+              <div class="portfolio-card-meta">
+                <i data-lucide="clock" style="width:14px;height:14px" aria-hidden="true"></i> 4,5 meses
+              </div>
+            </div>
+          </li>
+          <li class="portfolio-card reveal">
+            <img src="https://images.unsplash.com/photo-1567364816519-cbc9c4b51391?w=600&q=80&auto=format&fit=crop"
+              alt="Tanque de ácido sulfúrico Suzano" width="600" height="240" loading="lazy" decoding="async">
+            <div class="portfolio-card-info">
+              <div class="portfolio-card-client">Suzano Aracruz — ES</div>
+              <h3 class="portfolio-card-title">Tanque Ø 7.100 × 10.000mm — Ácido Sulfúrico</h3>
+              <div class="portfolio-card-meta">
+                <i data-lucide="clock" style="width:14px;height:14px" aria-hidden="true"></i> 4 meses
+              </div>
+            </div>
+          </li>
+          <li class="portfolio-card reveal">
+            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&q=80&auto=format&fit=crop"
+              alt="Substituição de chaminé alto forno Ternium" width="600" height="240" loading="lazy" decoding="async">
+            <div class="portfolio-card-info">
+              <div class="portfolio-card-client">Ternium — RJ</div>
+              <h3 class="portfolio-card-title">Substituição de Chaminé de Alto Forno</h3>
+              <div class="portfolio-card-meta">
+                <i data-lucide="clock" style="width:14px;height:14px" aria-hidden="true"></i> 45 dias
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== CLIENTES ==================== -->
+    <section class="section-clientes" id="clientes" aria-label="Clientes">
+      <div class="container" style="margin-bottom:32px">
+        <h2 class="section-title" style="color:var(--navy-dark)">Empresas que confiam na Conmec</h2>
+      </div>
+      <div class="clientes-track-wrap">
+        <ul class="clientes-track" role="list">
+          <li><span class="client-name">Suzano</span></li>
+          <li><span class="client-name">Gerdau</span></li>
+          <li><span class="client-name">Ternium</span></li>
+          <li><span class="client-name">Suncoke</span></li>
+          <li><span class="client-name">Valmet</span></li>
+          <li><span class="client-name">Eldorado</span></li>
+          <li><span class="client-name">CMPC</span></li>
+          <li><span class="client-name">Veracel</span></li>
+          <!-- duplicados para carrossel infinito -->
+          <li aria-hidden="true"><span class="client-name">Suzano</span></li>
+          <li aria-hidden="true"><span class="client-name">Gerdau</span></li>
+          <li aria-hidden="true"><span class="client-name">Ternium</span></li>
+          <li aria-hidden="true"><span class="client-name">Suncoke</span></li>
+          <li aria-hidden="true"><span class="client-name">Valmet</span></li>
+          <li aria-hidden="true"><span class="client-name">Eldorado</span></li>
+          <li aria-hidden="true"><span class="client-name">CMPC</span></li>
+          <li aria-hidden="true"><span class="client-name">Veracel</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== DIFERENCIAIS ==================== -->
+    <section class="section-diferenciais" id="infraestrutura">
+      <div class="container">
+        <div class="section-header section-header--light">
+          <h2 class="section-title">Por que a Conmec?</h2>
+          <p class="section-desc" style="color:rgba(245,247,248,.7)">Cinco razões que nos diferenciam no mercado industrial.</p>
+        </div>
+        <ul class="diff-grid" role="list">
+          <li class="diff-item reveal">
+            <div class="diff-icon"><i data-lucide="user-check" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="diff-title">Acesso direto à direção</h3>
+              <p class="diff-desc">Decisões sem burocracia, parceria real com quem decide nos projetos.</p>
+            </div>
+          </li>
+          <li class="diff-item reveal">
+            <div class="diff-icon"><i data-lucide="building-2" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="diff-title">Infraestrutura própria</h3>
+              <p class="diff-desc">22.000 m² de planta fabril — sem dependência de terceiros para fabricar.</p>
+            </div>
+          </li>
+          <li class="diff-item reveal">
+            <div class="diff-icon"><i data-lucide="cpu" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="diff-title">Tecnologia robótica</h3>
+              <p class="diff-desc">Pioneiros no ES em corte e solda robótica — qualidade consistente em larga escala.</p>
+            </div>
+          </li>
+          <li class="diff-item reveal">
+            <div class="diff-icon"><i data-lucide="award" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="diff-title">Equipe certificada</h3>
+              <p class="diff-desc">Inspetores LP e NR-13, soldadores qualificados e engenheiros experientes em campo.</p>
+            </div>
+          </li>
+          <li class="diff-item reveal">
+            <div class="diff-icon"><i data-lucide="shield-check" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="diff-title">Histórico comprovado</h3>
+              <p class="diff-desc">Mais de 30 anos de projetos entregues para as maiores indústrias do Brasil.</p>
             </div>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- ======== SETORES ======== -->
-    <section class="setores section-pad" id="setores">
-      <div class="container">
-        <div class="section-header reveal">
-          <p class="eyebrow">Mercados</p>
-          <h2>Atuamos onde o desafio é maior</h2>
-          <p>Com profundo conhecimento dos processos produtivos de cada setor, a Conmec entrega projetos alinhados às exigências técnicas e aos prazos críticos das operações industriais.</p>
-        </div>
-        <ul class="setores-grid" role="list">
-          <li class="setor-item reveal">
-            <div class="setor-foto">
-              <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=700&q=80&auto=format&fit=crop" alt="Equipamentos em indústria de Papel e Celulose" width="700" height="420" loading="lazy" decoding="async" />
-            </div>
-            <div class="setor-overlay">
-              <span class="setor-acento" aria-hidden="true"></span>
-              <span class="setor-nome">Papel e Celulose</span>
-            </div>
-          </li>
-          <li class="setor-item reveal reveal-delay-1">
-            <div class="setor-foto">
-              <img src="https://images.unsplash.com/photo-1555432272-bef0fd867a53?w=700&q=80&auto=format&fit=crop" alt="Produção siderúrgica com aço fundido" width="700" height="420" loading="lazy" decoding="async" />
-            </div>
-            <div class="setor-overlay">
-              <span class="setor-acento" aria-hidden="true"></span>
-              <span class="setor-nome">Siderurgia</span>
-            </div>
-          </li>
-          <li class="setor-item reveal reveal-delay-2">
-            <div class="setor-foto">
-              <img src="https://images.unsplash.com/photo-1559825481-12a05cc00344?w=700&q=80&auto=format&fit=crop" alt="Planta química industrial" width="700" height="420" loading="lazy" decoding="async" />
-            </div>
-            <div class="setor-overlay">
-              <span class="setor-acento" aria-hidden="true"></span>
-              <span class="setor-nome">Química</span>
-            </div>
-          </li>
-          <li class="setor-item reveal reveal-delay-3">
-            <div class="setor-foto">
-              <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=700&q=80&auto=format&fit=crop" alt="Usina de geração de energia" width="700" height="420" loading="lazy" decoding="async" />
-            </div>
-            <div class="setor-overlay">
-              <span class="setor-acento" aria-hidden="true"></span>
-              <span class="setor-nome">Energia</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ======== CASES ======== -->
-    <section class="cases section-pad" id="cases">
-      <div class="container">
-        <div class="section-header reveal">
-          <p class="eyebrow">Portfólio</p>
-          <h2>Projetos que comprovam<br>nossa capacidade</h2>
-        </div>
-        <ul class="cases-grid" role="list">
-          <li class="case-card reveal">
-            <div class="case-foto">
-              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop" alt="Retrofit de difusores industriais" width="600" height="400" loading="lazy" decoding="async" />
-            </div>
-            <div class="case-body">
-              <div class="case-cliente">CMPC / Valmet</div>
-              <h3>Retrofit de 2 Difusores</h3>
-              <div class="case-meta">
-                <span class="case-local"><i data-lucide="map-pin" aria-hidden="true"></i> Rio Grande do Sul</span>
-                <span class="case-prazo"><i data-lucide="calendar" aria-hidden="true"></i> Abr–Dez 2026</span>
-              </div>
-            </div>
-          </li>
-          <li class="case-card reveal reveal-delay-1">
-            <div class="case-foto">
-              <img src="https://images.unsplash.com/photo-1606765962248-7ff407b51667?w=600&q=80&auto=format&fit=crop" alt="Reforma geral de caldeiras industriais" width="600" height="400" loading="lazy" decoding="async" />
-            </div>
-            <div class="case-body">
-              <div class="case-cliente">Gerdau</div>
-              <h3>Reforma Geral de Caldeiras</h3>
-              <div class="case-meta">
-                <span class="case-local"><i data-lucide="map-pin" aria-hidden="true"></i> Ouro Branco, MG</span>
-                <span class="case-prazo"><i data-lucide="clock" aria-hidden="true"></i> 4,5 meses</span>
-              </div>
-            </div>
-          </li>
-          <li class="case-card reveal">
-            <div class="case-foto">
-              <img src="https://images.unsplash.com/photo-1567364816519-cbc9c4b51391?w=600&q=80&auto=format&fit=crop" alt="Tanque industrial de grande porte" width="600" height="400" loading="lazy" decoding="async" />
-            </div>
-            <div class="case-body">
-              <div class="case-cliente">Suzano</div>
-              <h3>Tanque Ø 7.100 × 10.000mm — Ácido Sulfúrico</h3>
-              <div class="case-meta">
-                <span class="case-local"><i data-lucide="map-pin" aria-hidden="true"></i> Aracruz, ES</span>
-                <span class="case-prazo"><i data-lucide="clock" aria-hidden="true"></i> 4 meses</span>
-              </div>
-            </div>
-          </li>
-          <li class="case-card reveal reveal-delay-1">
-            <div class="case-foto">
-              <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&q=80&auto=format&fit=crop" alt="Chaminé de alto forno sendo substituída" width="600" height="400" loading="lazy" decoding="async" />
-            </div>
-            <div class="case-body">
-              <div class="case-cliente">Ternium</div>
-              <h3>Substituição de Chaminé de Alto Forno</h3>
-              <div class="case-meta">
-                <span class="case-local"><i data-lucide="map-pin" aria-hidden="true"></i> Rio de Janeiro, RJ</span>
-                <span class="case-prazo"><i data-lucide="clock" aria-hidden="true"></i> 45 dias</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <div class="section-cta">
-          <a href="#contato" class="btn btn-outline">Ver todos os projetos</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======== CLIENTES ======== -->
-    <section class="clientes section-pad" id="clientes" aria-label="Clientes que confiam na Conmec">
-      <div class="container">
-        <div class="section-header reveal" style="margin-bottom:var(--s8)">
-          <p class="eyebrow">Clientes</p>
-          <h2>Empresas que confiam na Conmec</h2>
-        </div>
-        <div class="clientes-inner reveal" role="list" aria-label="Lista de clientes">
-          <span class="cliente-logo" role="listitem">Suzano</span>
-          <span class="cliente-logo" role="listitem">Gerdau</span>
-          <span class="cliente-logo" role="listitem">Ternium</span>
-          <span class="cliente-logo" role="listitem">Suncoke</span>
-          <span class="cliente-logo" role="listitem">Valmet</span>
-          <span class="cliente-logo" role="listitem">Eldorado</span>
-          <span class="cliente-logo" role="listitem">CMPC</span>
-          <span class="cliente-logo" role="listitem">Veracel</span>
-        </div>
-        <p class="clientes-nota">* Uso de marcas sujeito a autorização formal.</p>
-      </div>
-    </section>
-
-    <!-- ======== DIFERENCIAIS (fundo azul) ======== -->
-    <section class="diferenciais section-pad" id="diferenciais">
-      <div class="container">
-        <div class="diferenciais-header reveal">
-          <p class="eyebrow">Por que a Conmec?</p>
-          <h2>Cinco razões que nos<br>diferenciam no mercado</h2>
-        </div>
-        <ul class="diferenciais-grid" role="list">
-          <li class="diferencial-item reveal">
-            <div class="dif-num" aria-hidden="true">01</div>
-            <h3>Acesso direto à direção</h3>
-            <p>Decisões sem burocracia, parceria real com quem decide nos projetos.</p>
-          </li>
-          <li class="diferencial-item reveal reveal-delay-1">
-            <div class="dif-num" aria-hidden="true">02</div>
-            <h3>Infraestrutura própria</h3>
-            <p>Sem dependência de terceiros — 22.000&nbsp;m² prontos para seu projeto.</p>
-          </li>
-          <li class="diferencial-item reveal reveal-delay-2">
-            <div class="dif-num" aria-hidden="true">03</div>
-            <h3>Tecnologia robótica</h3>
-            <p>Pioneiros no ES em solda e corte robotizados — qualidade consistente em larga escala.</p>
-          </li>
-          <li class="diferencial-item reveal reveal-delay-3">
-            <div class="dif-num" aria-hidden="true">04</div>
-            <h3>Equipe certificada</h3>
-            <p>Inspetores LP e NR-13, soldadores qualificados e engenheiros experientes em campo.</p>
-          </li>
-          <li class="diferencial-item reveal reveal-delay-4">
-            <div class="dif-num" aria-hidden="true">05</div>
-            <h3>Histórico comprovado</h3>
-            <p>Mais de 30 anos de projetos entregues para as maiores indústrias do Brasil.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ======== CONTATO ======== -->
-    <section class="contato section-pad" id="contato">
+    <!-- ==================== CONTATO ==================== -->
+    <section class="section-contato" id="contato">
       <div class="container">
         <div class="contato-grid">
-          <div class="contato-info reveal">
-            <p class="eyebrow">Entre em Contato</p>
-            <h2>Vamos conversar sobre<br>seu próximo projeto?</h2>
-            <p>Nossa equipe comercial responde em até 24 horas. Fale diretamente com quem tem autoridade para fechar.</p>
+          <div class="reveal">
+            <h2 class="contato-title">Vamos conversar sobre<br>seu próximo projeto?</h2>
+            <p class="contato-sub">Nossa equipe comercial responde em até 24 horas. Fale diretamente com quem tem autoridade para fechar.</p>
             <ul class="contato-lista" role="list">
               <li>
-                <a href="tel:+5527999999999" aria-label="Ligar para a Conmec">
-                  <i data-lucide="phone" aria-hidden="true"></i>
-                  <span>(27) 9 9999-9999</span>
+                <a href="tel:+5527999999999">
+                  <i data-lucide="phone" style="width:18px;height:18px;color:var(--amber)" aria-hidden="true"></i>
+                  (27) 9 9999-9999
                 </a>
               </li>
               <li>
-                <a href="mailto:comercial@conmec.com.br" aria-label="Enviar e-mail para a Conmec">
-                  <i data-lucide="mail" aria-hidden="true"></i>
-                  <span>comercial@conmec.com.br</span>
+                <a href="mailto:comercial@conmec.com.br">
+                  <i data-lucide="mail" style="width:18px;height:18px;color:var(--amber)" aria-hidden="true"></i>
+                  comercial@conmec.com.br
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/55279999999999" target="_blank" rel="noopener noreferrer" aria-label="Falar via WhatsApp">
-                  <i data-lucide="message-circle" aria-hidden="true"></i>
-                  <span>WhatsApp direto</span>
+                <a href="https://wa.me/5527999999999" target="_blank" rel="noopener noreferrer">
+                  <i data-lucide="message-circle" style="width:18px;height:18px;color:var(--amber)" aria-hidden="true"></i>
+                  WhatsApp direto
                 </a>
               </li>
               <li>
                 <span>
-                  <i data-lucide="map-pin" aria-hidden="true"></i>
-                  <span>Rod. ES-010, Km 35 — Aracruz, ES · CEP 29.192-730</span>
+                  <i data-lucide="map-pin" style="width:18px;height:18px;color:var(--amber)" aria-hidden="true"></i>
+                  Rod. ES-010, Km 35 — Aracruz, ES
                 </span>
               </li>
             </ul>
           </div>
 
-          <div class="contato-form reveal reveal-delay-2">
+          <div class="reveal">
             <form class="form" id="form-contato" novalidate aria-label="Formulário de contato">
               <div class="form-row">
                 <div class="form-group">
-                  <label for="nome">Nome completo <span aria-hidden="true">*</span></label>
-                  <input type="text" id="nome" name="nome" placeholder="Seu nome" required autocomplete="name" />
+                  <label for="nome">Nome completo *</label>
+                  <input type="text" id="nome" name="nome" placeholder="Seu nome" required autocomplete="name">
                 </div>
                 <div class="form-group">
-                  <label for="empresa">Empresa <span aria-hidden="true">*</span></label>
-                  <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" required autocomplete="organization" />
+                  <label for="empresa">Empresa *</label>
+                  <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" required autocomplete="organization">
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label for="email">E-mail <span aria-hidden="true">*</span></label>
-                  <input type="email" id="email" name="email" placeholder="seu@email.com.br" required autocomplete="email" />
+                  <label for="email">E-mail *</label>
+                  <input type="email" id="email" name="email" placeholder="seu@email.com.br" required autocomplete="email">
                 </div>
                 <div class="form-group">
                   <label for="telefone">Telefone / WhatsApp</label>
-                  <input type="tel" id="telefone" name="telefone" placeholder="(27) 9 0000-0000" autocomplete="tel" />
+                  <input type="tel" id="telefone" name="telefone" placeholder="(27) 9 0000-0000" autocomplete="tel">
                 </div>
               </div>
               <div class="form-group">
@@ -490,50 +1135,41 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="mensagem">Mensagem <span aria-hidden="true">*</span></label>
+                <label for="mensagem">Mensagem *</label>
                 <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva brevemente o projeto ou a necessidade..." required></textarea>
               </div>
-              <button type="submit" class="btn btn-primary btn-lg btn-full">
+              <button type="submit" class="btn-submit">
                 <i data-lucide="send" aria-hidden="true"></i>
                 Enviar mensagem
               </button>
-              <p class="form-nota">* Campos obrigatórios. Respondemos em até 24 horas úteis.</p>
             </form>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ======== CTA FINAL ======== -->
-    <section class="cta-final" aria-label="Chamada para ação">
-      <div class="container">
-        <h2>Pronto para iniciar<br>seu próximo projeto?</h2>
-        <p>Entre em contato agora e receba um retorno em até 24 horas da nossa equipe comercial.</p>
-        <div class="cta-btns">
-          <a href="#contato" class="btn btn-dark btn-lg">Solicitar Orçamento</a>
-          <a href="tel:+5527999999999" class="btn btn-ghost-dark btn-lg">
-            <i data-lucide="phone" aria-hidden="true"></i>
-            Ligar agora
-          </a>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- ======== FOOTER ======== -->
+  <!-- ==================== FOOTER ==================== -->
   <footer class="site-footer" aria-label="Rodapé">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-col footer-col--brand">
+        <div class="footer-brand">
           <div class="footer-logo">
-            <svg width="140" height="40" viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Conmec Industrial">
-              <rect x="0" y="14" width="6" height="16" fill="#E39A38"/>
-              <rect x="8" y="8" width="6" height="28" fill="#E39A38"/>
-              <rect x="16" y="2" width="6" height="40" fill="#E39A38"/>
-              <text x="28" y="30" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="20" fill="#FFFFFF" letter-spacing="1">CONMEC</text>
-              <text x="28" y="42" font-family="Inter,Arial,sans-serif" font-weight="500" font-size="8" fill="rgba(255,255,255,0.5)" letter-spacing="2.5">INDUSTRIAL</text>
-            </svg>
+            <img
+              src="./site-conmec-arquivos/assets/images/logo-conmec-branco.png"
+              alt="Conmec Industrial"
+              width="160" height="44" loading="lazy"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            >
+            <span style="display:none; align-items:center; gap:10px;">
+              <svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="0"  y="12" width="7" height="24" rx="1" fill="#C9A338"/>
+                <rect x="9"  y="7"  width="7" height="29" rx="1" fill="#C9A338"/>
+                <rect x="18" y="0"  width="7" height="36" rx="1" fill="#C9A338"/>
+              </svg>
+              <span style="font-family:var(--font-ui);font-weight:700;font-size:18px;color:#F5F7F8;letter-spacing:1px">CONMEC<br><small style="font-size:9px;opacity:.5;letter-spacing:2px">INDUSTRIAL</small></span>
+            </span>
           </div>
           <address>
             Rod. ES-010, Km 35<br>
@@ -541,7 +1177,7 @@
             <a href="tel:+5527999999999">(27) 9 9999-9999</a><br>
             <a href="mailto:comercial@conmec.com.br">comercial@conmec.com.br</a>
           </address>
-          <span class="badge-iso" aria-label="Certificação ISO 9001">✓ ISO 9001 Certificada</span>
+          <div class="footer-cert">✓ ISO 9001:2015 Certificada</div>
         </div>
 
         <div class="footer-col">
@@ -558,16 +1194,16 @@
         <div class="footer-col">
           <h4>Empresa</h4>
           <ul role="list">
-            <li><a href="#empresa">Quem somos</a></li>
-            <li><a href="#cases">Portfólio</a></li>
-            <li><a href="#diferenciais">Diferenciais</a></li>
+            <li><a href="#empresa">Quem Somos</a></li>
+            <li><a href="#portfolio">Portfólio</a></li>
+            <li><a href="#infraestrutura">Infraestrutura</a></li>
             <li><a href="#clientes">Clientes</a></li>
-            <li><a href="#contato">Trabalhe conosco</a></li>
+            <li><a href="#contato">Trabalhe Conosco</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Mercados</h4>
+          <h4>Onde Atuamos</h4>
           <ul role="list">
             <li><a href="#setores">Papel e Celulose</a></li>
             <li><a href="#setores">Siderurgia</a></li>
@@ -580,18 +1216,76 @@
     <div class="footer-bottom">
       <div class="container">
         <p>© 2026 Conmec Industrial Ltda. Todos os direitos reservados.</p>
-        <a href="#" aria-label="CNPJ e informações legais">CNPJ 00.000.000/0001-00</a>
+        <a href="#">CNPJ 00.000.000/0001-00</a>
       </div>
     </div>
   </footer>
 
-  <!-- STICKY CTA MOBILE -->
-  <div class="sticky-cta-mobile" aria-hidden="true">
-    <a href="#contato" class="btn btn-primary btn-full">Solicitar Orçamento</a>
+  <!-- STICKY MOBILE CTA -->
+  <div class="sticky-mobile" aria-hidden="true">
+    <a href="#contato" class="btn btn-amber">Solicitar Orçamento</a>
   </div>
 
-  <!-- ======== SCRIPTS ======== -->
-  <script src="./assets/js/main.js" defer></script>
+  <!-- ==================== SCRIPTS ==================== -->
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Lucide icons
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      // Header scroll
+      const header = document.getElementById('site-header');
+      window.addEventListener('scroll', () => {
+        header.style.paddingTop = window.scrollY > 80 ? '8px' : '20px';
+      }, { passive: true });
+
+      // Hamburger
+      const hamburger = document.getElementById('hamburger-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileClose = document.getElementById('mobile-close');
+      const toggleMenu = (open) => {
+        mobileMenu.classList.toggle('is-open', open);
+        hamburger.setAttribute('aria-expanded', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      hamburger.addEventListener('click', () => toggleMenu(!mobileMenu.classList.contains('is-open')));
+      mobileClose.addEventListener('click', () => toggleMenu(false));
+      mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+      // Carrossel de serviços
+      const carousel = document.getElementById('servicos-carousel');
+      const cardWidth = 373 + 20;
+      document.getElementById('carousel-prev').addEventListener('click', () => {
+        carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+      });
+      document.getElementById('carousel-next').addEventListener('click', () => {
+        carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      });
+
+      // Scroll reveal
+      const reveals = document.querySelectorAll('.reveal');
+      const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('is-visible'), i * 80);
+            revealObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(el => revealObs.observe(el));
+
+      // Formulário
+      const form = document.getElementById('form-contato');
+      form && form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('.btn-submit');
+        btn.textContent = '✓ Mensagem enviada!';
+        btn.style.background = '#437a22';
+        setTimeout(() => { btn.textContent = 'Enviar mensagem'; btn.style.background = ''; }, 4000);
+      });
+
+    });
+  </script>
 
 </body>
 </html>
